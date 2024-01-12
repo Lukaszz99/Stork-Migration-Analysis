@@ -55,13 +55,13 @@ if __name__ == "__main__":
     b_data = data.loc[data['tag-local-identifier'] == 4554]
     b_data = b_data.reset_index(drop=True)
 
-    s_a = StorkData(4571, a_data)
-    s_b = StorkData(4554, b_data)
-    start = datetime.now()
-    print('Start time: ', start)
-    total_score, mean_score = s_a.count_score(s_b)
-    print('Total score: ', total_score, '\nMean score: ', mean_score)
-    end = datetime.now()
-    print('End time: ', end)
-    print('Finished after', end - start)
+    # s_a = StorkData(4571, a_data)
+    # s_b = StorkData(4554, b_data)
+    # start = datetime.now()
+    # print('Start time: ', start)
+    # total_score, mean_score = s_a.count_score(s_b)
+    # print('Total score: ', total_score, '\nMean score: ', mean_score)
+    # end = datetime.now()
+    # print('End time: ', end)
+    # print('Finished after', end - start)
 
