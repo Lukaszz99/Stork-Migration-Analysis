@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import geopy.distance
 from datetime import datetime
+from utils.computation import ConnectionScorer
 
 FORMAT = '%Y-%m-%d %H:%M:%S.%f'
 
@@ -45,15 +46,26 @@ def count_time_diff(datetime_a, datetime_b):
 
 
 if __name__ == "__main__":
-    data = pd.read_csv('data/LifeTrack_white_stork_clean.csv')
-    occ_data = pd.read_csv('occurences.csv')
-    unique_ids = occ_data['stork_id']
+    data = pd.read_csv('data/stroke_migration/LifeTrack_white_stork_clean.csv')
+    # occ_data = pd.read_csv('occurences.csv')
+    # unique_ids = occ_data['stork_id']
 
     a_data = data.loc[data['tag-local-identifier'] == 4571]
     a_data = a_data.reset_index(drop=True)
 
     b_data = data.loc[data['tag-local-identifier'] == 4554]
     b_data = b_data.reset_index(drop=True)
+
+    start = datetime.now()
+    print('Start time: ', start)
+
+    cs = ConnectionScorer()
+    score = cs.calculate_proximity_score(a_data, b_data)
+    print(score)
+
+    end = datetime.now()
+    print('End time: ', end)
+    print('Finished after', end - start)
 
     # s_a = StorkData(4571, a_data)
     # s_b = StorkData(4554, b_data)
