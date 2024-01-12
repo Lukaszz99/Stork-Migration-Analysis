@@ -56,6 +56,7 @@ class ConnectionScorer:
     def _calculate_timedelta(self, time_a: str, time_b: str):
         return max(1,
                    (pd.Timestamp(time_a) - pd.Timestamp(time_b)).total_seconds() / 60)
+
     def _calculate_distance(self, pt_a, pt_b):
         """
         Calculates distance between two points in meters. Returns at least 5 meters, to avoid division by small values
