@@ -32,6 +32,8 @@ class ConnectionScorer:
                 it += 1
                 if it % 10000 == 0:
                     print(f"Iteration: {it}/{total_iterations}\t {(it / total_iterations) * 100}%")
+                    print(f"Total score: {total_score}")
+                    print()
 
                 time_diff = self._calculate_timedelta(stork_a_pt[2], stork_b_pt[2])
 
@@ -46,7 +48,7 @@ class ConnectionScorer:
                     continue
 
                 tmp_score = self._calculate_score(distance_diff, time_diff, weight=1.0)
-                total_score += tmp_score
+                total_score = (total_score + tmp_score) / 2
 
         return total_score
 
@@ -54,7 +56,7 @@ class ConnectionScorer:
         return (self.distance_threshold / distance_diff + self.time_threshold / time_diff) * weight
 
     def _calculate_timedelta(self, time_a: str, time_b: str):
-        return max(1,
+        return max(5,
                    (pd.Timestamp(time_a) - pd.Timestamp(time_b)).total_seconds() / 60)
 
     def _calculate_distance(self, pt_a, pt_b):
@@ -65,4 +67,4 @@ class ConnectionScorer:
         :return:
         """
         dst = geopy.distance.geodesic(pt_a, pt_b).m
-        return max(5, dst)
+        return max(25, dst)
