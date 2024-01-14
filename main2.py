@@ -11,10 +11,14 @@ def append_score(filename: str, pair: str, score: float):
 
 
 if __name__ == "__main__":
+
+    # DODAJ TYLKO NAZE PLIKU CSV, RESZTA JEST JUZ W KODZIE
+    FILENAME = "pl_afr_1_cleaned.csv"
+
     start = datetime.now()
     print('Start time: ', start)
 
-    df = pd.read_csv("data/stroke_migration/pl_afr_3_cleaned_v2.csv")
+    df = pd.read_csv(f"data/stroke_migration/{FILENAME}")
 
     unique_ids = df['stork_migration_id'].unique()
 
@@ -35,7 +39,7 @@ if __name__ == "__main__":
         score = cs.calculate_proximity_score(stork_1, stork_2)
         print(f"Pair {pair} score: {score}\n")
 
-        append_score("pl_afr_3_scores.txt", pair, score)
+        append_score(f"seasons_score/{'_'.join(FILENAME.split('_')[:3])}_scores.txt", pair, score)
 
     end = datetime.now()
     print('End time: ', end)

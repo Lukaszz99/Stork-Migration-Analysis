@@ -50,4 +50,6 @@ class GraphViz:
         ax.margins(0.08)
         plt.axis("off")
         plt.tight_layout()
-        plt.savefig("filename.png")
+
+        base_name = filename.split("/")[-1]
+        plt.savefig(f"seasons_img/{'_'.join(base_name.split('_')[:3])}.png")
