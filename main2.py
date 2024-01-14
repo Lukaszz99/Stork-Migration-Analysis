@@ -4,21 +4,42 @@ import geopy.distance
 from datetime import datetime
 from utils.computation import ConnectionScorer
 
+
+def append_score(filename: str, pair: str, score: float):
+    with open(filename, 'a') as f:
+        f.write(f"{pair[0]}\t{pair[1]}\t{score}\n")
+
+
 if __name__ == "__main__":
-    df = pd.read_csv("data/stroke_migration/pl_afr_3_filtered.csv")
 
-    stork_1 = df.loc[df['stork_migration_id'] == "3955_pl_afr_3"]
-    stork_1 = stork_1.reset_index(drop=True)
-
-    stork_2 = df.loc[df['stork_migration_id'] == "3950_pl_afr_3"]
-    stork_2 = stork_2.reset_index(drop=True)
+    # DODAJ TYLKO NAZE PLIKU CSV, RESZTA JEST JUZ W KODZIE
+    FILENAME = "pl_afr_1_cleaned.csv"
 
     start = datetime.now()
     print('Start time: ', start)
 
-    cs = ConnectionScorer(distance_threshold=20000.0, time_threshold=720.0)  # 20km and 12h
-    score = cs.calculate_proximity_score(stork_1, stork_2)
-    print(score)
+    df = pd.read_csv(f"data/stroke_migration/{FILENAME}")
+
+    unique_ids = df['stork_migration_id'].unique()
+
+    id_pais = [(a, b) for idx, a in enumerate(unique_ids) for b in unique_ids[idx + 1:]]
+    print(f"#Pairs: {len(id_pais)}")
+    print(f"All pairs: {id_pais}")
+
+    for i, pair in enumerate(id_pais):
+        print(f"Current pair: {pair}\t{i + 1}/{len(id_pais)}\n")
+
+        stork_1 = df.loc[df['stork_migration_id'] == pair[0]]
+        stork_1 = stork_1.reset_index(drop=True)
+
+        stork_2 = df.loc[df['stork_migration_id'] == pair[1]]
+        stork_2 = stork_2.reset_index(drop=True)
+
+        cs = ConnectionScorer(distance_threshold=50000.0, time_threshold=10080.0)  # 50km and 7 days
+        score = cs.calculate_proximity_score(stork_1, stork_2)
+        print(f"Pair {pair} score: {score}\n")
+
+        append_score(f"seasons_score/{'_'.join(FILENAME.split('_')[:3])}_scores.txt", pair, score)
 
     end = datetime.now()
     print('End time: ', end)

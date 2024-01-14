@@ -24,16 +24,16 @@ class ConnectionScorer:
 
         total_score = 0.0
 
-        total_iterations = len(stork_a_points) * len(stork_b_points)
-        print(f"Total iterations: {total_iterations}")
-        it = 0
+        # total_iterations = len(stork_a_points) * len(stork_b_points)
+        # print(f"Total iterations: {total_iterations}")
+        # it = 0
         for stork_a_pt in stork_a_points:
             for stork_b_pt in stork_b_points:
-                it += 1
-                if it % 10000 == 0:
-                    print(f"Iteration: {it}/{total_iterations}\t {(it / total_iterations) * 100}%")
-                    print(f"Total score: {total_score}")
-                    print()
+                # it += 1
+                # if it % 10000 == 0:
+                #     print(f"Iteration: {it}/{total_iterations}\t {(it / total_iterations) * 100}%")
+                #     print(f"Total score: {total_score}")
+                #     print()
 
                 time_diff = self._calculate_timedelta(stork_a_pt[2], stork_b_pt[2])
 
