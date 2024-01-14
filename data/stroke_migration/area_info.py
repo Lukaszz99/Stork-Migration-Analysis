@@ -54,6 +54,10 @@ landuse_dict = {
     'salt_pond': 'water',
 }
 
+tags = {
+    'landuse': True
+}
+
 
 def get_landuse(lat, long):
     try:
@@ -68,11 +72,7 @@ def get_landuse(lat, long):
         return 'other'
 
 
-tags = {
-    'landuse': True
-}
-
-data = pd.read_csv('pl_afr_1_cleaned.csv')
+data = pd.read_csv('afr_pl_2_cleaned_v2.csv')
 data = data.drop(['Unnamed: 0'], axis=1)
 data = data.reset_index(drop=True)
 data['area_type'] = None
@@ -84,4 +84,4 @@ for idx, row in data.iterrows():
     if idx % 100 == 0 and idx != 0:
         print(len(data.index) - idx, 'left...')
 
-data.to_csv('pl_afr_1_cleaned_v3.csv')
+data.to_csv('afr_pl_2_cleaned_v3.csv')
